@@ -132,16 +132,19 @@ module.exports.changeMulti = async (req,res)=>{
 // tự thêm validate 
 module.exports.create=async (req,res)=>{
     try {
-        const taskParent=await Task.findOne({
-            _id:req.body.taskParentId
-        })
-        if(!taskParent){
-            res.json({
-                code:400,
-                message:"Task cha không tồn tại!",
+        if(req.body.taskParentId){
+            const taskParent=await Task.findOne({
+                _id:req.body.taskParentId
             })
-            return 
+            if(!taskParent){
+                res.json({
+                    code:400,
+                    message:"Task cha không tồn tại!",
+                })
+                return 
+            }
         }
+        
         req.body.createdBy={
             user_id:req.user.id
         }
