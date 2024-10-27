@@ -182,7 +182,8 @@ module.exports.delete=async (req,res)=>{
     try {
         const id=req.params.id
         await Task.updateOne({
-            _id:id
+            _id:id,
+            deleted:false
         },{
             deleted:true,
             deletedAt:new Date()
